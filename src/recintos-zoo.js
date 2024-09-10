@@ -11,10 +11,6 @@ class RecintosZoo {
             return { erro: "Quantidade inválida"}
         }
 
-        if (animalEscolhido == 10) {
-            return { erro: "Não há recinto viável" }
-        }
-
         var espacoNecessario = animalEscolhido.tamanho * quantidade
         var recintosDisponiveis = recintos
         var recintosViaveis = [] // Array com strings dos recintos viáveis seguindo esse modelo: "Recinto 1 (espaço livre: 5 total: 10)"
@@ -47,13 +43,18 @@ class RecintosZoo {
             }
             
             // Regra ...
-
+            
             // Regra ...
 
 
             // Se passou em todas as verificações, o recinto é viável
             recintosViaveis.push(`Recinto ${recinto.numero} (espaço livre: ${espacoLivre - espacoNecessario} total: ${recinto.tamanhoTotal})`);
         }
+
+            //Se nao houver recintos viaveis (nao houver espaço no recinto para o animal/lote)
+            if (recintosViaveis.length === 0) {
+                return { erro: "Não há recinto viável" }
+            }
 
         // Se tudo correu bem, retorna os recintos viaveis e retorna sem erros
         return {
@@ -150,4 +151,4 @@ var animais = {
 
 export { RecintosZoo as RecintosZoo };
 
-console.log(new RecintosZoo().analisaRecintos('MACACO', 10))
+console.log(new RecintosZoo().analisaRecintos('MACACO', 2))
