@@ -11,7 +11,7 @@ class RecintosZoo {
             return { erro: "Quantidade inválida"}
         }
 
-        if (animalEscolhido.recintosViaveis >=) {
+        if (animalEscolhido == 10) {
             return { erro: "Não há recinto viável" }
         }
 
