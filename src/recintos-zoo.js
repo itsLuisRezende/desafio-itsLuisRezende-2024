@@ -50,6 +50,8 @@ class RecintosZoo {
             } else if (temCarnivoro){
                 continue;           
             }
+
+            if (animalEscolhido)
             
             // Regra - Hipopótamo só tolera outras espécies num recinto com biomas "savana e rio"
             if (animal === 'HIPOPOTAMO' && recinto.animaisExistentes.length > 0 && recinto.bioma !== "savana e rio") {
@@ -165,4 +167,4 @@ var animais = {
 
 export { RecintosZoo as RecintosZoo };
 
-console.log(new RecintosZoo().analisaRecintos('MACACO', 1))
+console.log(new RecintosZoo().analisaRecintos('MACACO', 12))
