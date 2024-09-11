@@ -17,6 +17,7 @@ class RecintosZoo {
 
         for (const i in recintos) {
             const recinto = recintos[i];
+            espacoNecessario = animalEscolhido.tamanho * quantidade // Reseta o espaco necessario
             
             // Regra - o recinto inclui o bioma aceito pelo animal?
             if (!animalEscolhido.bioma.includes(recinto.bioma)) {
@@ -38,14 +39,27 @@ class RecintosZoo {
                 }
             });
 
-            if (animalEscolhido.carnivoro && temCarnivoro && !recinto.animaisExistentes.includes(animal)) {
-                continue; // Pula se for carnívoro e o recinto tiver outras espécies
+            if (animalEscolhido.carnivoro) {
+                if (temCarnivoro && !recinto.animaisExistentes.includes(animal)) {
+                    continue; // Pula se for carnívoro e o recinto tiver outras espécies também carnívoras
+                }
+
+                if (!temCarnivoro && recinto.animaisExistentes.length !== 0) {
+                    continue; // Pula se for carnívoro e o recinto tiver animais não carnívoros
+                }
+            } else if (temCarnivoro){
+                continue;           
             }
             
-            // Regra ...
+            // Regra - Hipopótamo só tolera outras espécies num recinto com biomas "savana e rio"
+            if (animal === 'HIPOPOTAMO' && recinto.animaisExistentes.length > 0 && recinto.bioma !== "savana e rio") {
+                continue; // Se for hipopótamo, pular se o bioma não for "savana e rio" e houver outros animais
+            }
             
-            // Regra ...
-
+            // Regra - mais de uma espécie considera-se 1 espaço extra
+            if (recinto.animaisExistentes.length !== 0 && !recinto.animaisExistentes.includes(animal)) {
+                espacoNecessario += 1
+            }
 
             // Se passou em todas as verificações, o recinto é viável
             recintosViaveis.push(`Recinto ${recinto.numero} (espaço livre: ${espacoLivre - espacoNecessario} total: ${recinto.tamanhoTotal})`);
@@ -119,36 +133,36 @@ var recintos = [
 var animais = {
     LEAO: {
         tamanho: 3, 
-        bioma: ["savana"],
+        bioma: ["savana", "savana e rio"],
         carnivoro: true
     },
     LEOPARDO: {
         tamanho: 2, 
-        bioma: ["savana"],
+        bioma: ["savana", "savana e rio"],
         carnivoro: true
     },
     CROCODILO: {
         tamanho: 3, 
-        bioma: ["rio"],
+        bioma: ["rio", "savana e rio"],
         carnivoro: true
     },
     MACACO: {
         tamanho: 1, 
-        bioma: ["savana", "floresta"],
+        bioma: ["savana", "floresta", "savana e rio"],
         carnivoro: false
     },
     GAZELA: {
         tamanho: 2, 
-        bioma: ["savana"],
+        bioma: ["savana", "savana e rio"],
         carnivoro: false
     },
     HIPOPOTAMO: {
         tamanho: 4, 
-        bioma: ["savana e rio"],
+        bioma: ["savana", "rio", "savana e rio"],
         carnivoro: false
     },
 }
 
 export { RecintosZoo as RecintosZoo };
 
-console.log(new RecintosZoo().analisaRecintos('MACACO', 2))
+console.log(new RecintosZoo().analisaRecintos('MACACO', 1))
