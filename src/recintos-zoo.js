@@ -50,12 +50,15 @@ class RecintosZoo {
             } else if (temCarnivoro){
                 continue;           
             }
-
-            if (animalEscolhido)
             
             // Regra - Hipopótamo só tolera outras espécies num recinto com biomas "savana e rio"
             if (animal === 'HIPOPOTAMO' && recinto.animaisExistentes.length > 0 && recinto.bioma !== "savana e rio") {
                 continue; // Se for hipopótamo, pular se o bioma não for "savana e rio" e houver outros animais
+            }
+
+            // Regra - Macaco não deve ficar sozinho no recinto
+            if (animal === "MACACO" && quantidade === 1 && recinto.animaisExistentes.length === 0) {
+                continue; // Pula para o proximo recinto viavel
             }
             
             // Regra - mais de uma espécie considera-se 1 espaço extra
@@ -167,4 +170,4 @@ var animais = {
 
 export { RecintosZoo as RecintosZoo };
 
-console.log(new RecintosZoo().analisaRecintos('MACACO', 12))
+console.log(new RecintosZoo().analisaRecintos('MACACO',1))
