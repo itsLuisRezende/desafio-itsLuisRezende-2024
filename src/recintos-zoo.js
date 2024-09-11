@@ -170,4 +170,4 @@ var animais = {
 
 export { RecintosZoo as RecintosZoo };
 
-console.log(new RecintosZoo().analisaRecintos('MACACO',1))
+new RecintosZoo().analisaRecintos('MACACO',1)
